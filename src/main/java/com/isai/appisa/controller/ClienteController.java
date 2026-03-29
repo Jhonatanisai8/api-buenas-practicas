@@ -1,5 +1,6 @@
 package com.isai.appisa.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,7 +9,6 @@ import com.isai.appisa.models.entities.Cliente;
 import com.isai.appisa.service.ICliente;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(path = "/api/v1/clientes")
@@ -27,14 +27,14 @@ public class ClienteController {
         return clienteService.guardarCliente(cliente);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void eliminarCliente(@RequestParam Long idCliente) {
+    @RequestMapping(path = "/{idCliente}", method = RequestMethod.DELETE)
+    public void eliminarCliente(@PathVariable Long idCliente) {
         Cliente clienteEliminar = clienteService.obtenerClientePorId(idCliente);
         clienteService.eliminarCliente(clienteEliminar);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Cliente obtenerCClientePorID(@RequestParam Long idCliente) {
+    @RequestMapping(path = "/{idCliente}", method = RequestMethod.GET)
+    public Cliente obtenerCClientePorID(@PathVariable Long idCliente) {
         return clienteService.obtenerClientePorId(idCliente);
     }
 
