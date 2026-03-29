@@ -10,7 +10,6 @@ import com.isai.appisa.service.ICliente;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @RestController
 @RequestMapping(path = "/api/v1/clientes")
 @RequiredArgsConstructor
@@ -23,9 +22,20 @@ public class ClienteController {
         return clienteService.guardarCliente(cliente);
     }
 
-    @RequestMapping(method=RequestMethod.GET)
-    public void eliminraCliente() {
-    
+    @RequestMapping(method = RequestMethod.PUT)
+    public Cliente actualizarCliente(Cliente cliente) {
+        return clienteService.guardarCliente(cliente);
     }
-    
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void eliminarCliente(@RequestParam Long idCliente) {
+        Cliente clienteEliminar = clienteService.obtenerClientePorId(idCliente);
+        clienteService.eliminarCliente(clienteEliminar);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public Cliente obtenerCClientePorID(@RequestParam Long idCliente) {
+        return clienteService.obtenerClientePorId(idCliente);
+    }
+
 }
