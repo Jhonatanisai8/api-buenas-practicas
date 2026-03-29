@@ -1,6 +1,5 @@
 package com.isai.appisa.models.dao;
 
-import java.util.Long;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
