@@ -1,7 +1,5 @@
 package com.isai.appisa.service.impl;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +17,8 @@ public class ClienteImpl implements ICliente {
 
     @Override
     @Transactional
-    public void eliminarCliente(UUID idCliente) {
-        clienteDao.deleteById(idCliente);
+    public void eliminarCliente(Cliente clienteEliminar) {
+        clienteDao.delete(clienteEliminar);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class ClienteImpl implements ICliente {
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente obtenerClientePorId(UUID idCliente) {
+    public Cliente obtenerClientePorId(Long idCliente) {
         return clienteDao.findById(idCliente).orElseThrow();
     }
 

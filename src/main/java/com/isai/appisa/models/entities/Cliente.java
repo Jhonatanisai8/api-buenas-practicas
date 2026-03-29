@@ -2,7 +2,6 @@ package com.isai.appisa.models.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,9 +23,9 @@ import lombok.Setter;
 public class Cliente implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente", updatable = false, nullable = false)
-    private UUID idCliente;
+    private Long idCliente;
 
     @Column(name = "nombre")
     private String nombre;
