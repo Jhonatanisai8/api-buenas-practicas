@@ -1,5 +1,6 @@
 package com.isai.appisa.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isai.appisa.models.entities.Cliente;
@@ -24,32 +26,36 @@ import lombok.extern.log4j.Log4j2;
 @Tag(name = "Gestión de clientes", description = "Operaciones para administrar clientes en el sistema")
 public class ClienteController {
 
-  private final ICliente clienteService;
+    private final ICliente clienteService;
 
-  @Operation(summary = "Crear un nuevo usuario")
-  @PostMapping
-  public Cliente guardarCliente(@RequestBody Cliente cliente) {
-    log.info("Guardando cliente: " + cliente.getApellido());
-    return clienteService.guardarCliente(cliente);
-  }
+    @Operation(summary = "Crear un nuevo usuario")
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente guardarCliente(@RequestBody Cliente cliente) {
+        log.info("Guardando cliente: " + cliente.getApellido());
+        return clienteService.guardarCliente(cliente);
+    }
 
-  @Operation(summary = "Actualizar un usuario existente")
-  @PutMapping
-  public Cliente actualizarCliente(@RequestBody Cliente cliente) {
-    return clienteService.guardarCliente(cliente);
-  }
+    @Operation(summary = "Actualizar un usuario existente")
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cliente actualizarCliente(@RequestBody Cliente cliente) {
+        return clienteService.guardarCliente(cliente);
+    }
 
-  @Operation(summary = "Eliminar un usuario existente")
-  @DeleteMapping(path = "/{idCliente}")
-  public void eliminarCliente(@PathVariable Long idCliente) {
-    Cliente clienteEliminar = clienteService.obtenerClientePorId(idCliente);
-    clienteService.eliminarCliente(clienteEliminar);
-  }
+    @Operation(summary = "Eliminar un usuario existente")
+    @DeleteMapping(path = "/{idCliente}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminarCliente(@PathVariable Long idCliente) {
+        Cliente clienteEliminar = clienteService.obtenerClientePorId(idCliente);
+        clienteService.eliminarCliente(clienteEliminar);
+    }
 
-  @Operation(summary = "Obtener un usuario por ID")
-  @GetMapping(path = "/{idCliente}")
-  public Cliente obtenerCClientePorID(@PathVariable Long idCliente) {
-    return clienteService.obtenerClientePorId(idCliente);
-  }
+    @Operation(summary = "Obtener un usuario por ID")
+    @GetMapping(path = "/{idCliente}")
+    @ResponseStatus(HttpStatus.OK)
+    public Cliente obtenerCClientePorID(@PathVariable Long idCliente) {
+        return clienteService.obtenerClientePorId(idCliente);
+    }
 
 }
