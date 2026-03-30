@@ -31,7 +31,7 @@ public class ClienteImpl implements ICliente {
     @Override
     @Transactional(readOnly = true)
     public Cliente obtenerClientePorId(Long idCliente) {
-        return clienteDao.findById(idCliente).orElseThrow();
+        return clienteDao.findById(idCliente).orElse(null);
     }
 
 }
