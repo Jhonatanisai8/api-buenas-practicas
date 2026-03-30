@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isai.appisa.models.dtos.ClienteDTO;
 import com.isai.appisa.models.entities.Cliente;
 import com.isai.appisa.service.ICliente;
 
@@ -36,17 +37,30 @@ public class ClienteController {
     @Operation(summary = "Crear un nuevo usuario")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente guardarCliente(@RequestBody Cliente cliente) {
-        log.info("Guardando cliente: " + cliente.getApellido());
-        return clienteService.guardarCliente(cliente);
+    public Cliente guardarCliente(@RequestBody ClienteDTO clienteDTO) {
+        Cliente cliente = clienteService.guardarCliente(clienteDTO);
+        return Cliente.builder()
+                .idCliente(cliente.getIdCliente())
+                .nombre(cliente.getNombre())
+                .apellido(cliente.getApellido())
+                .correo(cliente.getCorreo())
+                .fechaRegistro(cliente.getFechaRegistro())
+                .build();
     }
 
     @Operation(summary = "Actualizar un usuario existente")
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente actualizarCliente(@RequestBody Cliente cliente) {
-        return clienteService.guardarCliente(cliente);
-    }                   
+    public Cliente actualizarCliente(@RequestBody ClienteDTO clienteDTO) {
+        Cliente cliente = clienteService.guardarCliente(clienteDTO);
+        return Cliente.builder()
+                .idCliente(cliente.getIdCliente())
+                .nombre(cliente.getNombre())
+                .apellido(cliente.getApellido())
+                .correo(cliente.getCorreo())
+                .fechaRegistro(cliente.getFechaRegistro())
+                .build();
+    }
 
     @Operation(summary = "Eliminar un usuario existente")
     @DeleteMapping(path = "/{idCliente}")
@@ -69,7 +83,14 @@ public class ClienteController {
     @GetMapping(path = "/{idCliente}")
     @ResponseStatus(HttpStatus.OK)
     public Cliente obtenerCClientePorID(@PathVariable Long idCliente) {
-        return clienteService.obtenerClientePorId(idCliente);
+        Cliente cliente = clienteService.obtenerClientePorId(idCliente);
+        return Cliente.builder()
+                .idCliente(cliente.getIdCliente())
+                .nombre(cliente.getNombre())
+                .apellido(cliente.getApellido())
+                .correo(cliente.getCorreo())
+                .fechaRegistro(cliente.getFechaRegistro())
+                .build();
     }
 
 }

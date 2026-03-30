@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.isai.appisa.models.dao.ClienteDao;
+import com.isai.appisa.models.dtos.ClienteDTO;
 import com.isai.appisa.models.entities.Cliente;
 import com.isai.appisa.service.ICliente;
 
@@ -17,13 +18,14 @@ public class ClienteImpl implements ICliente {
 
     @Override
     @Transactional
-    public void eliminarCliente(Cliente clienteEliminar) {
-        clienteDao.delete(clienteEliminar);
-    }
-
-    @Override
-    @Transactional
-    public Cliente guardarCliente(Cliente cliente) {
+    public Cliente guardarCliente(ClienteDTO clienteDTO) {
+        Cliente cliente = Cliente.builder()
+                .idCliente(clienteDTO.getIdCliente())
+                .nombre(clienteDTO.getNombre())
+                .apellido(clienteDTO.getApellido())
+                .correo(clienteDTO.getCorreo())
+                .fechaRegistro(clienteDTO.getFechaRegistro())
+                .build();
         return clienteDao.save(cliente);
 
     }
@@ -32,6 +34,19 @@ public class ClienteImpl implements ICliente {
     @Transactional(readOnly = true)
     public Cliente obtenerClientePorId(Long idCliente) {
         return clienteDao.findById(idCliente).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public void eliminarCliente(ClienteDTO clienteDTO) {
+        Cliente cliente = Cliente.builder()
+                .idCliente(clienteDTO.getIdCliente())
+                .nombre(clienteDTO.getNombre())
+                .apellido(clienteDTO.getApellido())
+                .correo(clienteDTO.getCorreo())
+                .fechaRegistro(clienteDTO.getFechaRegistro())
+                .build();
+        clienteDao.delete(cliente);
     }
 
 }
